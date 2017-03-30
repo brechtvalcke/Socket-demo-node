@@ -33,6 +33,17 @@ io.on("connection", function(client) {
       console.log(client.username + ' disconnected');
       client.broadcast.emit("userDisconnected", client.username);
   });
+  client.on("message", function(to,message){
+    var clients = io.sockets.connected;
+    var toClientId = "";
+    for (var clientId in clients){
+      var clientObj=io.sockets.connected[clientId];
+      if (clientObj.username===to){
+        toClientId=clientId;
+      }
+    }
+    io.clients[toClientId].emit("messageRevieved",{from:client.username,message:message});
+  });
 });
 app.get("*", function(req, res) {
     fs.createReadStream("./public/index.html").pipe(res);
