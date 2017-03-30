@@ -47,8 +47,9 @@
       reloadUserList();
     });
     function reloadUserList(){
+      document.getElementById("userContainer").innerHTML="";
       allUserNames.forEach(function(name){
-        document.getElementById("userContainer").innerHTML="";
+
         var p = document.createElement("p");
         p.id=name;
         p.innerHTML=name;
