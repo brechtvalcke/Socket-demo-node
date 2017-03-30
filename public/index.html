@@ -1,0 +1,57 @@
+<html>
+<head>
+  <title>web socket test</title>
+</head>
+<body>
+  <h1>my username is <span id="usrnm"></span></h1>
+  <h2>all connected users</h2>
+  <div id="userContainer">
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+  <script>
+    var username = prompt("Please enter your username", "username");
+    var allUserNames = [];
+    if (username != null){
+      var socket = io.connect('http://localhost');
+    }
+    socket.on("connected",function(data){
+        console.log("wohooo it connected!!!");
+        socket.emit("setUsername", username);
+        socket.emit("getAllConnected");
+    });
+    socket.on("recievedUsername", function(username){
+      document.getElementById("usrnm").innerHTML = username;
+    });
+    socket.on("userConnected",function(name){
+
+      allUserNames.push(name);
+      reloadUserList();
+    });
+    socket.on("RecieveAllConnected",function(names){
+      allUserNames = [];
+      names.forEach(function(name){
+        allUserNames.push(name);
+      });
+      reloadUserList();
+    });
+    socket.on("userDisconnected",function(name){
+      var oldAllUserNames = allUserNames;
+      allUserNames=[];
+      oldAllUserNames.forEach(function(username){
+        if (username!==name){
+          allUserNames.push(username);
+        }
+      });
+      reloadUserList();
+    });
+    function reloadUserList(){
+      var nameTags = "";
+      allUserNames.forEach(function(name){
+        nameTags+="<p id='"+ name +"'>"+ name +"</p>";
+      });
+      document.getElementById("userContainer").innerHTML=nameTags;
+    }
+  </script>
+</body>
+</html>
