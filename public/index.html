@@ -14,7 +14,7 @@
     var allUserNames = [];
     if (username != null){
       var socket = io.connect('http://sockets-demo-node.azurewebsites.net/');
-      
+
     }
     socket.on("connected",function(data){
         console.log("wohooo it connected!!!");
@@ -47,12 +47,14 @@
       reloadUserList();
     });
     function reloadUserList(){
-      var nameTags = "";
       allUserNames.forEach(function(name){
-        nameTags+="<p id='"+ name +"'>"+ name +"</p>";
-        document.getElementById(name).addEventListener("click",function(){sendMessage(name);});
+        document.getElementById("userContainer").innerHTML="";
+        var p = document.createElement("p");
+        p.id=name;
+        p.innerHTML=name;
+        p.addEventListener("click",function(){sendMessage(name);});
+        document.getElementById("userContainer").appendChild(p);
       });
-      document.getElementById("userContainer").innerHTML=nameTags;
     }
     function sendMessage(name){
       console.log(name);
