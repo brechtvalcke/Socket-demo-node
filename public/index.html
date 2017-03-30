@@ -57,7 +57,14 @@
       });
     }
     function sendMessage(name){
-      console.log(name);
+      var message = prompt("What do you want to send "+ name, "Hi");
+      if (message != null){
+        socket.emit("message",name,message);
+      }
+
+    }
+    socket.on("messageRevieved",message){
+      alert(message.from +  " said " + message.message);
     }
   </script>
 </body>
