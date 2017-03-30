@@ -40,10 +40,10 @@ io.on("connection", function(client) {
       var clientObj=io.sockets.connected[clientId];
       if (clientObj.username===to){
         toClientId=clientId;
-        console.log(clientId);
+
       }
     }
-    io.clients[toClientId].emit("messageRevieved",{from:client.username,message:message});
+    io.sockets.connected[toClientId].emit("messageRevieved",{from:client.username,message:message});
   });
 });
 app.get("*", function(req, res) {
