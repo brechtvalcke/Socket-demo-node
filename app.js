@@ -37,4 +37,4 @@ io.on("connection", function(client) {
 app.get("*", function(req, res) {
     fs.createReadStream("./public/index.html").pipe(res);
 });
-server.listen(80, "0.0.0.0");
+server.listen(process.env.port || 1337);
