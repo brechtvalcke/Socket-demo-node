@@ -63,9 +63,9 @@
       }
 
     }
-    socket.on("messageRevieved",message){
+    socket.on("messageRevieved",function(message){
       alert(message.from +  " said " + message.message);
-    }
+    });
   </script>
 </body>
 </html>
