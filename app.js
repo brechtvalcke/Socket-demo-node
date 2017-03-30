@@ -37,4 +37,4 @@ io.on("connection", function(client) {
 app.get("*", function(req, res) {
     fs.createReadStream("./public/index.html").pipe(res);
 });
-server.listen(80);
+server.listen(3000);
