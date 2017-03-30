@@ -13,7 +13,8 @@
     var username = prompt("Please enter your username", "username");
     var allUserNames = [];
     if (username != null){
-      var socket = io.connect('http://localhost');
+      var socket = io.connect('http://sockets-demo-node.azurewebsites.net/');
+      
     }
     socket.on("connected",function(data){
         console.log("wohooo it connected!!!");
@@ -49,8 +50,12 @@
       var nameTags = "";
       allUserNames.forEach(function(name){
         nameTags+="<p id='"+ name +"'>"+ name +"</p>";
+        document.getElementById(name).addEventListener("click",function(){sendMessage(name);});
       });
       document.getElementById("userContainer").innerHTML=nameTags;
+    }
+    function sendMessage(name){
+      console.log(name);
     }
   </script>
 </body>
